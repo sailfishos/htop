@@ -1,0 +1,13 @@
+diff --git a/htop.desktop b/htop.desktop
+index 13b71e7..d3f9bb4 100644
+--- a/htop.desktop
++++ b/htop.desktop
+@@ -31,7 +31,7 @@ Comment[uk]=Перегляд системних процесів
+ Comment[zh_CN]=显示系统进程
+ Comment[zh_TW]=顯示系統行程
+ Terminal=true
+-Exec=htop
++Exec=fingerterm -e htop
+ Icon=htop
+ Categories=ConsoleOnly;System;
+ GenericName=Process Viewer
