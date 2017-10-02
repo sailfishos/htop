@@ -8,6 +8,7 @@ URL:        http://hisham.hm/htop/
 Source:     %{name}-%{version}.tar.gz
 Patch0:     proper-icon-location.patch
 Patch1:     run-with-fingerterm.patch
+Patch2:     show-alternative-keys-in-functionbar.patch
 BuildRequires:  pkgconfig(ncursesw)
 Requires:   fingerterm
 
@@ -22,6 +23,7 @@ but we also have code for running under FreeBSD and Mac OS X
 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 ./autogen.sh

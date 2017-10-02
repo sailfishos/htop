@@ -1,0 +1,13 @@
+diff --git a/FunctionBar.c b/FunctionBar.c
+index 659f410..8fee2e7 100644
+--- a/FunctionBar.c
++++ b/FunctionBar.c
+@@ -28,7 +28,7 @@ typedef struct FunctionBar_ {
+ 
+ }*/
+ 
+-static const char* FunctionBar_FKeys[] = {"F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", NULL};
++static const char* FunctionBar_FKeys[] = {" h", " S", " /", " \\", " t", " >", " ]", " [", " k", " q", NULL};
+ 
+ static const char* FunctionBar_FLabels[] = {"      ", "      ", "      ", "      ", "      ", "      ", "      ", "      ", "      ", "      ", NULL};
+ 
