@@ -10,6 +10,7 @@ Patch0:     proper-icon-location.patch
 Patch1:     run-with-fingerterm.patch
 Patch2:     show-alternative-keys-in-functionbar.patch
 BuildRequires:  pkgconfig(ncursesw)
+BuildRequires:  python
 Requires:   fingerterm
 
 %description
