@@ -7,7 +7,7 @@ index 13b71e7..d3f9bb4 100644
  Comment[zh_TW]=顯示系統行程
  Terminal=true
 -Exec=htop
-+Exec=fingerterm -e htop
++Exec=fingerterm -e htop --alt-keys
  Icon=htop
  Categories=ConsoleOnly;System;
  GenericName=Process Viewer
