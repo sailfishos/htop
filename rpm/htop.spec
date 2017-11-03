@@ -19,6 +19,15 @@ It requires `ncurses`. It is developed primarily on Linux,
 but we also have code for running under FreeBSD and Mac OS X
 (help and testing are wanted for these platforms!)
 
+%package desktop
+Summary:    Desktop file for htop
+Group:      System/Binaries
+BuildArch:  noarch
+Requires:   htop >= %{version}
+
+%description desktop
+Desktop file for starting htop from app grid.
+
 %prep
 %setup -q -n %{name}-%{version}/htop
 
@@ -40,5 +49,8 @@ rm -rf %{buildroot}
 %doc COPYING
 %{_bindir}/htop
 %{_mandir}/man1/htop.1.gz
+
+%files desktop
+%defattr(-,root,root,-)
 %{_datadir}/applications/htop.desktop
 %{_datadir}/icons/hicolor/128x128/apps/htop.png
