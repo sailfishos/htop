@@ -11,7 +11,6 @@ Patch1:     run-with-fingerterm.patch
 Patch2:     show-alternative-keys-in-functionbar.patch
 BuildRequires:  pkgconfig(ncursesw)
 BuildRequires:  python
-Requires:   fingerterm
 
 %description
 This is `htop`, an interactive process viewer.
@@ -24,6 +23,7 @@ Summary:    Desktop file for htop
 Group:      System/Binaries
 BuildArch:  noarch
 Requires:   htop >= %{version}
+Requires:   fingerterm
 
 %description desktop
 Desktop file for starting htop from app grid.
