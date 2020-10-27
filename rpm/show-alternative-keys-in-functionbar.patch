@@ -2,9 +2,9 @@ diff --git a/FunctionBar.c b/FunctionBar.c
 index 659f410..113b499 100644
 --- a/FunctionBar.c
 +++ b/FunctionBar.c
-@@ -28,6 +28,12 @@ typedef struct FunctionBar_ {
+@@ -15,6 +15,12 @@ typedef struct FunctionBar_ {
+ #include <stdlib.h>
  
- }*/
  
 +static bool AltKeys = false;
 +static const char* Alt_FunctionBar_FKeys[] = {" h", " S", " /", " \\", " t", " >", " ]", " [", " k", " q", NULL};
@@ -12,10 +12,10 @@ index 659f410..113b499 100644
 +   AltKeys = use_alt_keys;
 +}
 +
- static const char* FunctionBar_FKeys[] = {"F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", NULL};
+ static const char* const FunctionBar_FKeys[] = {"F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", NULL};
  
- static const char* FunctionBar_FLabels[] = {"      ", "      ", "      ", "      ", "      ", "      ", "      ", "      ", "      ", "      ", NULL};
-@@ -64,7 +70,7 @@ FunctionBar* FunctionBar_new(const char** functions, const char** keys, int* eve
+ static const char* const FunctionBar_FLabels[] = {"      ", "      ", "      ", "      ", "      ", "      ", "      ", "      ", "      ", "      ", NULL};
+@@ -51,7 +57,7 @@ FunctionBar* FunctionBar_new(const char** functions, const char** keys, int* eve
        this->size = i;
     } else {
        this->staticData = true;
@@ -28,28 +28,29 @@ diff --git a/FunctionBar.h b/FunctionBar.h
 index 1975fa3..bf2cac4 100644
 --- a/FunctionBar.h
 +++ b/FunctionBar.h
-@@ -21,6 +21,7 @@ typedef struct FunctionBar_ {
+@@ -17,6 +17,8 @@ typedef struct FunctionBar_ {
+    bool staticData;
  } FunctionBar;
  
- 
 +void FunctionBar_useAltKeys(bool use_alt_keys);
- 
++
  FunctionBar* FunctionBar_newEnterEsc(const char* enter, const char* esc);
  
+ FunctionBar* FunctionBar_new(const char* const* functions, const char* const* keys, const int* events);
 diff --git a/htop.c b/htop.c
 index 239b5d6..be7b1f4 100644
 --- a/htop.c
 +++ b/htop.c
-@@ -84,6 +84,7 @@ static CommandLineSettings parseArguments(int argc, char** argv) {
-       {"no-colour",no_argument,         0, 'C'},
-       {"pid",      required_argument,   0, 'p'},
-       {"io",       no_argument,         0, 'i'},
-+      {"alt-keys", no_argument,         0, 'a'},
+@@ -93,6 +93,7 @@ static CommandLineSettings parseArguments(int argc, char** argv) {
+       {"no-unicode", no_argument,         0, 'U'},
+       {"tree",       no_argument,         0, 't'},
+       {"pid",        required_argument,   0, 'p'},
++      {"alt-keys",   no_argument,         0, 'a'},
        {0,0,0,0}
     };
  
-@@ -92,6 +93,9 @@ static CommandLineSettings parseArguments(int argc, char** argv) {
-    while ((opt = getopt_long(argc, argv, "hvCs:d:u:p:i", long_opts, &opti))) {
+@@ -101,6 +102,9 @@ static CommandLineSettings parseArguments(int argc, char** argv) {
+    while ((opt = getopt_long(argc, argv, "hvmCs:td:u::Up:", long_opts, &opti))) {
        if (opt == EOF) break;
        switch (opt) {
 +         case 'a':

@@ -1,16 +1,15 @@
 Name:       htop
 Summary:    Interactive process viewer
-Version:    2.0.2
+Version:    3.0.2
 Release:    1
-Group:      System/Binaries
-License:    GPL 2.0
-URL:        http://hisham.hm/htop/
+License:    GPLv2+
+URL:        https://htop.dev/
 Source:     %{name}-%{version}.tar.gz
 Patch0:     proper-icon-location.patch
 Patch1:     run-with-fingerterm.patch
 Patch2:     show-alternative-keys-in-functionbar.patch
 BuildRequires:  pkgconfig(ncursesw)
-BuildRequires:  python
+BuildRequires:  python3-base
 
 %description
 This is `htop`, an interactive process viewer.
@@ -20,7 +19,6 @@ but we also have code for running under FreeBSD and Mac OS X
 
 %package desktop
 Summary:    Desktop file for htop
-Group:      System/Binaries
 BuildArch:  noarch
 Requires:   htop >= %{version}
 Requires:   fingerterm
@@ -29,26 +27,23 @@ Requires:   fingerterm
 Desktop file for starting htop from app grid.
 
 %prep
-%setup -q -n %{name}-%{version}/htop
-
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%autosetup -p1 -n %{name}-%{version}/htop
 
 %build
 ./autogen.sh
 %configure
-make %{?jobs:-j%jobs}
+%make_build
 
 %install
-rm -rf %{buildroot}
 %make_install
+
+# Remove man pages
+rm -Rvf %{buildroot}%{_mandir}/man1
 
 %files
 %defattr(-,root,root,-)
-%doc COPYING
+%license COPYING
 %{_bindir}/htop
-%{_mandir}/man1/htop.1.gz
 
 %files desktop
 %defattr(-,root,root,-)
