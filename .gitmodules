@@ -1,3 +1,3 @@
 [submodule "htop"]
 	path = htop
-	url = https://github.com/hishamhm/htop.git
+	url = https://git.sailfishos.org/mirror/htop.git
