@@ -1,8 +1,8 @@
 diff --git a/htop.desktop b/htop.desktop
-index 13b71e7..d3f9bb4 100644
+index 20bed49..0785231 100644
 --- a/htop.desktop
 +++ b/htop.desktop
-@@ -31,7 +31,7 @@ Comment[uk]=Перегляд системних процесів
+@@ -61,7 +61,7 @@ Comment[uk]=Перегляд системних процесів
  Comment[zh_CN]=显示系统进程
  Comment[zh_TW]=顯示系統行程
  Icon=htop

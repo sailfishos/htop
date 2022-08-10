@@ -1,34 +1,55 @@
+diff --git a/CommandLine.c b/CommandLine.c
+index d21f482..3d97608 100644
+--- a/CommandLine.c
++++ b/CommandLine.c
+@@ -118,6 +118,7 @@ static CommandLineStatus parseArguments(const char* program, int argc, char** ar
+       {"no-unicode", no_argument,         0, 'U'},
+       {"tree",       no_argument,         0, 't'},
+       {"pid",        required_argument,   0, 'p'},
++      {"alt-keys",   no_argument,         0, 'a'},
+       {"filter",     required_argument,   0, 'F'},
+       {"highlight-changes", optional_argument, 0, 'H'},
+       {"readonly",   no_argument,         0, 128},
+@@ -131,6 +132,9 @@ static CommandLineStatus parseArguments(const char* program, int argc, char** ar
+       if (opt == EOF)
+          break;
+       switch (opt) {
++         case 'a':
++            FunctionBar_useAltKeys(true);
++            break;
+          case 'h':
+             printHelpFlag(program);
+             return STATUS_OK_EXIT;
 diff --git a/FunctionBar.c b/FunctionBar.c
-index 659f410..113b499 100644
+index 0850037..9c0e056 100644
 --- a/FunctionBar.c
 +++ b/FunctionBar.c
-@@ -15,6 +15,12 @@ typedef struct FunctionBar_ {
- #include <stdlib.h>
- 
+@@ -17,6 +17,11 @@ in the source distribution for its full text.
+ #include "ProvideCurses.h"
+ #include "XUtils.h"
  
 +static bool AltKeys = false;
 +static const char* Alt_FunctionBar_FKeys[] = {" h", " S", " /", " \\", " t", " >", " ]", " [", " k", " q", NULL};
 +void FunctionBar_useAltKeys(bool use_alt_keys) {
 +   AltKeys = use_alt_keys;
 +}
-+
+ 
  static const char* const FunctionBar_FKeys[] = {"F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", NULL};
  
- static const char* const FunctionBar_FLabels[] = {"      ", "      ", "      ", "      ", "      ", "      ", "      ", "      ", "      ", "      ", NULL};
-@@ -51,7 +57,7 @@ FunctionBar* FunctionBar_new(const char** functions, const char** keys, int* eve
+@@ -56,7 +61,7 @@ FunctionBar* FunctionBar_new(const char* const* functions, const char* const* ke
        this->size = i;
     } else {
        this->staticData = true;
--      this->keys = (char**) FunctionBar_FKeys;
-+      this->keys = AltKeys ? (char**) Alt_FunctionBar_FKeys : (char**) FunctionBar_FKeys;
+-      this->keys.constKeys = FunctionBar_FKeys;
++      this->keys.constKeys = AltKeys ? Alt_FunctionBar_FKeys : FunctionBar_FKeys;
        this->events = FunctionBar_FEvents;
-       this->size = 10;
+       this->size = ARRAYSIZE(FunctionBar_FEvents);
     }
 diff --git a/FunctionBar.h b/FunctionBar.h
-index 1975fa3..bf2cac4 100644
+index f01a5ef..2ca77a0 100644
 --- a/FunctionBar.h
 +++ b/FunctionBar.h
-@@ -17,6 +17,8 @@ typedef struct FunctionBar_ {
+@@ -21,6 +21,8 @@ typedef struct FunctionBar_ {
     bool staticData;
  } FunctionBar;
  
@@ -37,25 +58,3 @@ index 1975fa3..bf2cac4 100644
  FunctionBar* FunctionBar_newEnterEsc(const char* enter, const char* esc);
  
  FunctionBar* FunctionBar_new(const char* const* functions, const char* const* keys, const int* events);
-diff --git a/htop.c b/htop.c
-index 239b5d6..be7b1f4 100644
---- a/htop.c
-+++ b/htop.c
-@@ -93,6 +93,7 @@ static CommandLineSettings parseArguments(int argc, char** argv) {
-       {"no-unicode", no_argument,         0, 'U'},
-       {"tree",       no_argument,         0, 't'},
-       {"pid",        required_argument,   0, 'p'},
-+      {"alt-keys",   no_argument,         0, 'a'},
-       {0,0,0,0}
-    };
- 
-@@ -101,6 +102,9 @@ static CommandLineSettings parseArguments(int argc, char** argv) {
-    while ((opt = getopt_long(argc, argv, "hvmCs:td:u::Up:", long_opts, &opti))) {
-       if (opt == EOF) break;
-       switch (opt) {
-+         case 'a':
-+            FunctionBar_useAltKeys(true);
-+            break;
-          case 'h':
-             printHelpFlag();
-             break;
